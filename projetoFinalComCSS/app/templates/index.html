@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<h2>Lista de Tarefas</h2>
+<div>
+<form method="post" action="/tasks/create" style="position: relative;">
+    <input type="text" name="title" class="title" placeholder="Insira uma nova tarefa" required style="margin-bottom: 10px;">
+    <input type="text" name="description" class="desc" placeholder="Descrição">
+    <button type="submit" class="submit" style= "position: absolute; margin-top: -30px;
+    right: 8%;
+    outline: none;
+    border: none;
+    color: #444444;
+    cursor: pointer;
+    border-radius: 5px;
+    padding: 7px 12px;
+    background: linear-gradient(to right, #CC95C0, #DBD4B4);"><i class="fa fa-plus"></i></button>
+</form>
+<ul>
+    {% for task in tasks %}
+    <div>
+        <li style="position: relative; margin-top: 50px;">
+            <form method="post" action="/tasks/{{ task.id }}/toggle">
+                <figure type="submit" id="done" style="margin-top: 12px;">{{ '✔️' if task.done else '❌' }}</figure>
+            </form>
+            <a href="/tasks/{{ task.id }}" style="margin-bottom: 0; color: #ccc;">{{ task.title }} - {{ task.description }}</a>
+            <form method="post" action="/tasks/{{ task.id }}/delete" style="margin-top: 0;">
+                <button type="submit" style="
+                font-size: 25px;
+                position: absolute;
+                outline: none;
+                border: none;
+                color: #444444;
+                cursor: pointer;
+                border-radius: 5px;
+                padding: 7px 12px;
+                background: linear-gradient(to right, #CC95C0, #DBD4B4);
+                background-clip: text;
+                -webkit-background-clip: text;
+                -webkit-text-fill-color: transparent;"><i class="fa fa-times" aria-hidden="true"></i></button>
+            </form>
+        </li>
+    </div>
+    {% endfor %}
+</ul>
+</div>
+{% endblock %}
